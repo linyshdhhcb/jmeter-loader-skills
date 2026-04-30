@@ -1,0 +1,21 @@
+timeStamp,elapsed,label,responseCode,responseMessage,threadName,dataType,success,failureMessage,bytes,sentBytes,grpThreads,allThreads,URL,Latency,IdleTime,Connect
+1714500000000,245,HTTP_Request,200,OK,TG_HTTP_LoadTest 1-1,text,true,,1024,512,1,1,http://localhost:8080/api/users,200,0,50
+1714500001000,312,HTTP_Request,200,OK,TG_HTTP_LoadTest 1-1,text,true,,1200,512,1,1,http://localhost:8080/api/users,250,0,62
+1714500002000,189,HTTP_Request,200,OK,TG_HTTP_LoadTest 1-2,text,true,,980,512,2,2,http://localhost:8080/api/users,150,0,39
+1714500003000,523,HTTP_Request,200,OK,TG_HTTP_LoadTest 1-1,text,true,,2100,512,2,2,http://localhost:8080/api/users,480,0,43
+1714500004000,156,HTTP_Request,200,OK,TG_HTTP_LoadTest 1-3,text,true,,850,512,3,3,http://localhost:8080/api/users,120,0,36
+1714500005000,985,HTTP_Request,500,Internal Server Error,TG_HTTP_LoadTest 1-1,text,false,Internal Server Error,512,512,3,3,http://localhost:8080/api/users,950,0,35
+1714500006000,234,HTTP_Request,200,OK,TG_HTTP_LoadTest 1-2,text,true,,1100,512,3,3,http://localhost:8080/api/users,200,0,34
+1714500007000,178,HTTP_Request,200,OK,TG_HTTP_LoadTest 1-4,text,true,,920,512,4,4,http://localhost:8080/api/users,145,0,33
+1714500008000,1250,HTTP_Request,200,OK,TG_HTTP_LoadTest 1-3,text,true,,3500,512,4,4,http://localhost:8080/api/users,1200,0,50
+1714500009000,201,HTTP_Request,200,OK,TG_HTTP_LoadTest 1-1,text,true,,1050,512,4,4,http://localhost:8080/api/users,180,0,21
+1714500010000,298,HTTP_Request,401,Unauthorized,TG_HTTP_LoadTest 1-5,text,false,Unauthorized,450,512,5,5,http://localhost:8080/api/users,280,0,18
+1714500011000,167,HTTP_Request,200,OK,TG_HTTP_LoadTest 1-2,text,true,,890,512,5,5,http://localhost:8080/api/users,135,0,32
+1714500012000,412,HTTP_Request,200,OK,TG_HTTP_LoadTest 1-3,text,true,,1800,512,5,5,http://localhost:8080/api/users,380,0,32
+1714500013000,198,HTTP_Request,200,OK,TG_HTTP_LoadTest 1-4,text,true,,1020,512,5,5,http://localhost:8080/api/users,165,0,33
+1714500014000,356,HTTP_Request,200,OK,TG_HTTP_LoadTest 1-1,text,true,,1500,512,5,5,http://localhost:8080/api/users,320,0,36
+1714500015000,210,HTTP_Request,200,OK,TG_HTTP_LoadTest 1-5,text,true,,1080,512,5,5,http://localhost:8080/api/users,185,0,25
+1714500016000,185,HTTP_Request,200,OK,TG_HTTP_LoadTest 1-2,text,true,,950,512,5,5,http://localhost:8080/api/users,150,0,35
+1714500017000,620,HTTP_Request,502,Bad Gateway,TG_HTTP_LoadTest 1-3,text,false,Bad Gateway,480,512,5,5,http://localhost:8080/api/users,590,0,30
+1714500018000,245,HTTP_Request,200,OK,TG_HTTP_LoadTest 1-4,text,true,,1150,512,5,5,http://localhost:8080/api/users,210,0,35
+1714500019000,175,HTTP_Request,200,OK,TG_HTTP_LoadTest 1-1,text,true,,900,512,5,5,http://localhost:8080/api/users,140,0,35

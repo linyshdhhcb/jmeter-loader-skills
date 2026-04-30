@@ -1,0 +1,89 @@
+{
+  "generated_at": "2026-04-30T22:08:22.590139",
+  "metrics": {
+    "summary": {
+      "total_samples": 20,
+      "success_samples": 17,
+      "error_samples": 3,
+      "error_rate": 15.0,
+      "start_time": "2024-05-01 02:00:00",
+      "end_time": "2024-05-01 02:00:19",
+      "duration_seconds": 19.0,
+      "total_labels": 1
+    },
+    "response_time": {
+      "min": 156,
+      "max": 1250,
+      "average": 356.95,
+      "median": 239.5,
+      "tp90": 656.5,
+      "tp95": 998.25,
+      "tp99": 1199.65
+    },
+    "throughput": {
+      "total_requests_per_sec": 1.05,
+      "success_requests_per_sec": 0.89,
+      "received_kb_per_sec": 1.21,
+      "sent_kb_per_sec": 0.53
+    },
+    "by_label": {
+      "HTTP_Request": {
+        "count": 20,
+        "success_count": 17,
+        "error_count": 3,
+        "error_rate": 15.0,
+        "response_time": {
+          "min": 156,
+          "max": 1250,
+          "average": 356.95,
+          "tp90": 656.5,
+          "tp95": 998.25,
+          "tp99": 1199.65
+        }
+      }
+    },
+    "time_series": [
+      {
+        "timestamp": 1714500000000,
+        "time_iso": "2024-05-01 02:00:00",
+        "count": 10,
+        "throughput": 1.0,
+        "avg_response_time": 427.3,
+        "error_rate": 0.1,
+        "bytes_per_sec": 1323.6
+      },
+      {
+        "timestamp": 1714500010000,
+        "time_iso": "2024-05-01 02:00:10",
+        "count": 10,
+        "throughput": 1.0,
+        "avg_response_time": 286.6,
+        "error_rate": 0.2,
+        "bytes_per_sec": 1022.0
+      }
+    ]
+  },
+  "suggestions": [
+    {
+      "category": "错误率",
+      "severity": "高",
+      "issue": "错误率过高: 15.00%",
+      "suggestions": [
+        "检查服务端日志定位错误原因",
+        "验证测试数据的正确性",
+        "确认服务容量是否足够",
+        "检查网络连接稳定性"
+      ]
+    },
+    {
+      "category": "接口异常",
+      "severity": "高",
+      "issue": "接口 \"HTTP_Request\" 错误率过高: 15.00%",
+      "suggestions": [
+        "重点排查该接口的实现逻辑",
+        "检查该接口依赖的下游服务",
+        "验证该接口的测试参数"
+      ]
+    }
+  ]
+}
