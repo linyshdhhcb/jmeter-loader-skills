@@ -428,3 +428,554 @@ jmeter -n -t test.jmx -l result.jtl -Jconcurrency=200 -Jduration=600
 - [Apache JMeter 官方文档](https://jmeter.apache.org/usermanual/index.html)
 - [JMeter 组件参考](https://jmeter.apache.org/usermanual/component_reference.html)
 - [JMeter 最佳实践](https://jmeter.apache.org/usermanual/best-practices.html)
+
+## 8. Controllers（控制器）
+
+### 8.1 If Controller
+```xml
+<IfController guiclass="IfControllerPanel" testclass="IfController" testname="If Controller" enabled="true">
+  <stringProp name="IfController.condition">${__jexl3("${status}" == "OK",)}</stringProp>
+  <boolProp name="IfController.evaluateAll">false</boolProp>
+  <boolProp name="IfController.useExpression">true</boolProp>
+</IfController>
+```
+
+### 8.2 While Controller
+```xml
+<WhileController guiclass="WhileControllerGui" testclass="WhileController" testname="While Controller" enabled="true">
+  <stringProp name="WhileController.condition">${__jexl3("${has_more}" == "true",)}</stringProp>
+</WhileController>
+```
+
+### 8.3 ForEach Controller
+```xml
+<ForeachController guiclass="ForeachControlPanel" testclass="ForeachController" testname="ForEach Controller" enabled="true">
+  <stringProp name="ForeachController.inputVal">item_</stringProp>
+  <stringProp name="ForeachController.startIndex">0</stringProp>
+  <stringProp name="ForeachController.endIndex">-1</stringProp>
+  <stringProp name="ForeachController.returnVal">current_item</stringProp>
+  <boolProp name="ForeachController.useSeparator">true</boolProp>
+</ForeachController>
+```
+
+### 8.4 Transaction Controller
+```xml
+<TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="Transaction Controller" enabled="true">
+  <boolProp name="TransactionController.include_timers">false</boolProp>
+  <boolProp name="TransactionController.parent">true</boolProp>
+</TransactionController>
+```
+
+### 8.5 Once Only Controller
+```xml
+<OnceOnlyController guiclass="OnceOnlyControllerGui" testclass="OnceOnlyController" testname="Once Only Controller" enabled="true"/>
+```
+
+### 8.6 Loop Controller
+```xml
+<LoopController guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
+  <boolProp name="LoopController.continue_forever">false</boolProp>
+  <stringProp name="LoopController.loops">5</stringProp>
+</LoopController>
+```
+
+### 8.7 Throughput Controller
+```xml
+<ThroughputController guiclass="ThroughputControllerGui" testclass="ThroughputController" testname="Throughput Controller" enabled="true">
+  <intProp name="ThroughputController.style">1</intProp>
+  <boolProp name="ThroughputController.perThread">true</boolProp>
+  <intProp name="ThroughputController.percentThroughput">50</intProp>
+</ThroughputController>
+```
+
+### 8.8 Critical Section Controller
+```xml
+<CriticalSectionController guiclass="CriticalSectionControllerGui" testclass="CriticalSectionController" testname="Critical Section Controller" enabled="true">
+  <stringProp name="CriticalSectionController.lockName">global_lock</stringProp>
+</CriticalSectionController>
+```
+
+### 8.9 Include Controller
+```xml
+<IncludeController guiclass="IncludeControllerGui" testclass="IncludeController" testname="Include Controller" enabled="true">
+  <stringProp name="IncludeController.includepath">fragment.jmx</stringProp>
+</IncludeController>
+```
+
+### 8.10 Module Controller
+```xml
+<ModuleController guiclass="ModuleControllerGui" testclass="ModuleController" testname="Module Controller" enabled="true">
+  <collectionProp name="ModuleController.node_path">
+    <stringProp name="0">Test Plan</stringProp>
+    <stringProp name="1">Thread Group</stringProp>
+    <stringProp name="2">My Fragment</stringProp>
+  </collectionProp>
+</ModuleController>
+```
+
+---
+
+## 9. Post Processors（后置处理器）- 补充
+
+### 9.1 Boundary Extractor
+```xml
+<BoundaryExtractor guiclass="BoundaryExtractorGui" testclass="BoundaryExtractor" testname="Boundary Extractor" enabled="true">
+  <stringProp name="BoundaryExtractor.refname">token</stringProp>
+  <stringProp name="BoundaryExtractor.boundaries">"token":"</stringProp>
+  <stringProp name="BoundaryExtractor.rightBoundary">"</stringProp>
+  <stringProp name="BoundaryExtractor.defaultValue">NOT_FOUND</stringProp>
+  <stringProp name="BoundaryExtractor.matchNumber">1</stringProp>
+  <stringProp name="BoundaryExtractor.useHeaders">false</stringProp>
+</BoundaryExtractor>
+```
+
+### 9.2 CSS Selector Extractor
+```xml
+<HtmlExtractor guiclass="HtmlExtractorGui" testclass="HtmlExtractor" testname="CSS Selector Extractor" enabled="true">
+  <stringProp name="HtmlExtractor.refname">title</stringProp>
+  <stringProp name="HtmlExtractor.expr">h1.title</stringProp>
+  <stringProp name="HtmlExtractor.attribute"></stringProp>
+  <stringProp name="HtmlExtractor.default">NOT_FOUND</stringProp>
+  <stringProp name="HtmlExtractor.match_number">1</stringProp>
+  <stringProp name="HtmlExtractor.extractor_impl">JSOUP</stringProp>
+</HtmlExtractor>
+```
+
+### 9.3 XPath2 Extractor
+```xml
+<XPath2Extractor guiclass="XPath2ExtractorGui" testclass="XPath2Extractor" testname="XPath2 Extractor" enabled="true">
+  <stringProp name="XPath2Extractor.refname">value</stringProp>
+  <stringProp name="XPath2Extractor.xpathQuery">//root/element/@attr</stringProp>
+  <stringProp name="XPath2Extractor.default">NOT_FOUND</stringProp>
+  <stringProp name="XPath2Extractor.matchNumber">1</stringProp>
+  <boolProp name="XPath2Extractor.fragment">false</boolProp>
+  <stringProp name="XPath2Extractor.namespaces"></stringProp>
+</XPath2Extractor>
+```
+
+### 9.4 JSON JMESPath Extractor
+```xml
+<JSONPathJMESPathExtractor guiclass="JSONPathJMESPathExtractorGui" testclass="JSONPathJMESPathExtractor" testname="JMESPath Extractor" enabled="true">
+  <stringProp name="JSONPathJMESPathExtractor.refname">items</stringProp>
+  <stringProp name="JSONPathJMESPathExtractor.expression">data.items[*].name</stringProp>
+  <stringProp name="JSONPathJMESPathExtractor.default">NOT_FOUND</stringProp>
+  <stringProp name="JSONPathJMESPathExtractor.matchNumber">1</stringProp>
+</JSONPathJMESPathExtractor>
+```
+
+---
+
+## 10. Assertions（断言）- 补充
+
+### 10.1 Duration Assertion
+```xml
+<DurationAssertion guiclass="DurationAssertionGui" testclass="DurationAssertion" testname="Duration Assertion" enabled="true">
+  <stringProp name="DurationAssertion.duration">5000</stringProp>
+</DurationAssertion>
+```
+
+### 10.2 Size Assertion
+```xml
+<SizeAssertion guiclass="SizeAssertionGui" testclass="SizeAssertion" testname="Size Assertion" enabled="true">
+  <stringProp name="SizeAssertion.size">1024</stringProp>
+  <intProp name="SizeAssertion.operator">2</intProp>
+</SizeAssertion>
+```
+Operator: 1=equal, 2=greater than, 3=less than, 4=greater or equal, 5=less or equal, 6=not equal
+
+### 10.3 JSON JMESPath Assertion
+```xml
+<JSONPathJMESPathAssertion guiclass="JSONPathJMESPathAssertionGui" testclass="JSONPathJMESPathAssertion" testname="JMESPath Assertion" enabled="true">
+  <stringProp name="JSONPathJMESPathAssertion.expression">data.status</stringProp>
+  <stringProp name="JSONPathJMESPathAssertion.expectedValue">success</stringProp>
+  <boolProp name="JSONPathJMESPathAssertion.isRegex">false</boolProp>
+</JSONPathJMESPathAssertion>
+```
+
+### 10.4 XPath2 Assertion
+```xml
+<XPath2Assertion guiclass="XPath2AssertionGui" testclass="XPath2Assertion" testname="XPath2 Assertion" enabled="true">
+  <stringProp name="XPath2Assertion.xpath">//root/status[text()='OK']</stringProp>
+  <stringProp name="XPath2Assertion.namespaces"></stringProp>
+</XPath2Assertion>
+```
+
+### 10.5 MD5Hex Assertion
+```xml
+<MD5HexAssertion guiclass="MD5HexAssertionGUI" testclass="MD5HexAssertion" testname="MD5Hex Assertion" enabled="true">
+  <stringProp name="MD5HexAssertion.size">d41d8cd98f00b204e9800998ecf8427e</stringProp>
+</MD5HexAssertion>
+```
+
+---
+
+## 11. Timers（定时器）- 补充
+
+### 11.1 Gaussian Random Timer
+```xml
+<GaussianRandomTimer guiclass="GaussianRandomTimerGui" testclass="GaussianRandomTimer" testname="Gaussian Random Timer" enabled="true">
+  <stringProp name="ConstantTimer.delay">1000</stringProp>
+  <stringProp name="RandomTimer.range">300</stringProp>
+</GaussianRandomTimer>
+```
+
+### 11.2 Constant Throughput Timer
+```xml
+<ConstantThroughputTimer guiclass="ConstantThroughputTimerGui" testclass="ConstantThroughputTimer" testname="Constant Throughput Timer" enabled="true">
+  <stringProp name="ConstantThroughputTimer.throughput">60.0</stringProp>
+  <intProp name="ConstantThroughputTimer.calcMode">1</intProp>
+</ConstantThroughputTimer>
+```
+calcMode: 0=this thread only, 1=all active threads, 2=all active threads in current thread group, 3=all active threads (shared)
+
+### 11.3 Precise Throughput Timer
+```xml
+<PreciseThroughputTimer guiclass="PreciseThroughputTimerGui" testclass="PreciseThroughputTimer" testname="Precise Throughput Timer" enabled="true">
+  <stringProp name="throughput">60.0</stringProp>
+  <stringProp name="throughputPeriod">60</stringProp>
+  <intProp name="exactLimit">100</intProp>
+  <intProp name="allowedTimers">5</intProp>
+  <stringProp name="randomSeed">0</stringProp>
+</PreciseThroughputTimer>
+```
+
+### 11.4 Synchronizing Timer
+```xml
+<Synchronizer guiclass="SynchronizerGui" testclass="Synchronizer" testname="Synchronizing Timer" enabled="true">
+  <stringProp name="groupSize">10</stringProp>
+  <stringProp name="timeoutInMs">0</stringProp>
+</Synchronizer>
+```
+
+### 11.5 Poisson Random Timer
+```xml
+<PoissonRandomTimer guiclass="PoissonRandomTimerGui" testclass="PoissonRandomTimer" testname="Poisson Random Timer" enabled="true">
+  <stringProp name="ConstantTimer.delay">1000</stringProp>
+  <stringProp name="RandomTimer.range">100</stringProp>
+</PoissonRandomTimer>
+```
+
+---
+
+## 12. JSR223 Elements（JSR223 脚本元素）
+
+### 12.1 JSR223 Sampler
+```xml
+<JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="JSR223 Sampler" enabled="true">
+  <stringProp name="scriptLanguage">groovy</stringProp>
+  <stringProp name="parameters"></stringProp>
+  <stringProp name="filename"></stringProp>
+  <boolProp name="cacheKey">true</boolProp>
+  <stringProp name="script">def response = "Hello from Groovy";
+SampleResult.setResponseData(response, "UTF-8");
+SampleResult.setSuccessful(true);</stringProp>
+</JSR223Sampler>
+```
+
+### 12.2 JSR223 PreProcessor
+```xml
+<JSR223PreProcessor guiclass="TestBeanGUI" testclass="JSR223PreProcessor" testname="JSR223 PreProcessor" enabled="true">
+  <stringProp name="scriptLanguage">groovy</stringProp>
+  <stringProp name="parameters"></stringProp>
+  <stringProp name="filename"></stringProp>
+  <boolProp name="cacheKey">true</boolProp>
+  <stringProp name="script">vars.put("timestamp", String.valueOf(System.currentTimeMillis()));</stringProp>
+</JSR223PreProcessor>
+```
+
+### 12.3 JSR223 PostProcessor
+```xml
+<JSR223PostProcessor guiclass="TestBeanGUI" testclass="JSR223PostProcessor" testname="JSR223 PostProcessor" enabled="true">
+  <stringProp name="scriptLanguage">groovy</stringProp>
+  <stringProp name="parameters"></stringProp>
+  <stringProp name="filename"></stringProp>
+  <boolProp name="cacheKey">true</boolProp>
+  <stringProp name="script">def response = prev.getResponseDataAsString();
+log.info("Response length: " + response.length());</stringProp>
+</JSR223PostProcessor>
+```
+
+### 12.4 JSR223 Assertion
+```xml
+<JSR223Assertion guiclass="TestBeanGUI" testclass="JSR223Assertion" testname="JSR223 Assertion" enabled="true">
+  <stringProp name="scriptLanguage">groovy</stringProp>
+  <stringProp name="parameters"></stringProp>
+  <stringProp name="filename"></stringProp>
+  <boolProp name="cacheKey">true</boolProp>
+  <stringProp name="script">if (!prev.isSuccessful()) {
+    AssertionResult.setFailure(true);
+    AssertionResult.setFailureMessage("Request failed: " + prev.getResponseCode());
+}</stringProp>
+</JSR223Assertion>
+```
+
+### 12.5 JSR223 Timer
+```xml
+<JSR223Timer guiclass="TestBeanGUI" testclass="JSR223Timer" testname="JSR223 Timer" enabled="true">
+  <stringProp name="scriptLanguage">groovy</stringProp>
+  <stringProp name="parameters"></stringProp>
+  <stringProp name="filename"></stringProp>
+  <boolProp name="cacheKey">true</boolProp>
+  <stringProp name="script">return (int)(Math.random() * 2000) + 1000;</stringProp>
+</JSR223Timer>
+```
+
+### 12.6 JSR223 Listener
+```xml
+<JSR223Listener guiclass="TestBeanGUI" testclass="JSR223Listener" testname="JSR223 Listener" enabled="true">
+  <stringProp name="scriptLanguage">groovy</stringProp>
+  <stringProp name="parameters"></stringProp>
+  <stringProp name="filename"></stringProp>
+  <boolProp name="cacheKey">true</boolProp>
+  <stringProp name="script">if (!sampleEvent.getResult().isSuccessful()) {
+    log.error("Failed: " + sampleEvent.getResult().getSampleLabel());
+}</stringProp>
+</JSR223Listener>
+```
+
+---
+
+## 13. Special Thread Groups（特殊线程组）
+
+### 13.1 setUp Thread Group
+```xml
+<SetupThreadGroup guiclass="SetupThreadGroupGui" testclass="SetupThreadGroup" testname="setUp Thread Group" enabled="true">
+  <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
+  <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="循环控制器" enabled="true">
+    <boolProp name="LoopController.continue_forever">false</boolProp>
+    <stringProp name="LoopController.loops">1</stringProp>
+  </elementProp>
+  <stringProp name="ThreadGroup.num_threads">1</stringProp>
+  <stringProp name="ThreadGroup.ramp_time">1</stringProp>
+  <boolProp name="ThreadGroup.scheduler">false</boolProp>
+  <stringProp name="ThreadGroup.duration"></stringProp>
+  <stringProp name="ThreadGroup.delay"></stringProp>
+  <boolProp name="ThreadGroup.same_user_on_next_iteration">true</boolProp>
+</SetupThreadGroup>
+```
+
+### 13.2 tearDown Thread Group
+```xml
+<PostThreadGroup guiclass="PostThreadGroupGui" testclass="PostThreadGroup" testname="tearDown Thread Group" enabled="true">
+  <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
+  <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="循环控制器" enabled="true">
+    <boolProp name="LoopController.continue_forever">false</boolProp>
+    <stringProp name="LoopController.loops">1</stringProp>
+  </elementProp>
+  <stringProp name="ThreadGroup.num_threads">1</stringProp>
+  <stringProp name="ThreadGroup.ramp_time">1</stringProp>
+  <boolProp name="ThreadGroup.scheduler">false</boolProp>
+  <stringProp name="ThreadGroup.duration"></stringProp>
+  <stringProp name="ThreadGroup.delay"></stringProp>
+  <boolProp name="ThreadGroup.same_user_on_next_iteration">true</boolProp>
+</PostThreadGroup>
+```
+
+---
+
+## 14. Backend Listener（后端监听器）
+
+### 14.1 InfluxDB Backend Listener
+```xml
+<BackendListener guiclass="BackendListenerGui" testclass="BackendListener" testname="Backend Listener" enabled="true">
+  <stringProp name="classname">org.apache.jmeter.visualizers.backend.influxdb.InfluxdbBackendListenerClient</stringProp>
+  <elementProp name="Arguments" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" enabled="true">
+    <collectionProp name="Arguments.arguments">
+      <elementProp name="influxdbUrl" elementType="Argument">
+        <stringProp name="Argument.name">influxdbUrl</stringProp>
+        <stringProp name="Argument.value">http://${__P(influxdb_host,localhost)}:${__P(influxdb_port,8086)}${__P(influxdb_path,/api/v2/write)}</stringProp>
+      </elementProp>
+      <elementProp name="influxdbToken" elementType="Argument">
+        <stringProp name="Argument.name">influxdbToken</stringProp>
+        <stringProp name="Argument.value">${__P(influxdb_token,)}</stringProp>
+      </elementProp>
+      <elementProp name="application" elementType="Argument">
+        <stringProp name="Argument.name">application</stringProp>
+        <stringProp name="Argument.value">${__P(application,JMeter-Test)}</stringProp>
+      </elementProp>
+      <elementProp name="measurement" elementType="Argument">
+        <stringProp name="Argument.name">measurement</stringProp>
+        <stringProp name="Argument.value">jmeter</stringProp>
+      </elementProp>
+      <elementProp name="summaryOnly" elementType="Argument">
+        <stringProp name="Argument.name">summaryOnly</stringProp>
+        <stringProp name="Argument.value">false</stringProp>
+      </elementProp>
+      <elementProp name="samplersRegex" elementType="Argument">
+        <stringProp name="Argument.name">samplersRegex</stringProp>
+        <stringProp name="Argument.value">.*</stringProp>
+      </elementProp>
+      <elementProp name="percentiles" elementType="Argument">
+        <stringProp name="Argument.name">percentiles</stringProp>
+        <stringProp name="Argument.value">50;90;95;99</stringProp>
+      </elementProp>
+      <elementProp name="testTitle" elementType="Argument">
+        <stringProp name="Argument.name">testTitle</stringProp>
+        <stringProp name="Argument.value">${__P(test_title,JMeter Load Test)}</stringProp>
+      </elementProp>
+    </collectionProp>
+  </elementProp>
+  <stringProp name="asyncQueueSize">5000</stringProp>
+</BackendListener>
+```
+
+### 14.2 Graphite Backend Listener
+```xml
+<BackendListener guiclass="BackendListenerGui" testclass="BackendListener" testname="Backend Listener" enabled="true">
+  <stringProp name="classname">org.apache.jmeter.visualizers.backend.graphite.GraphiteBackendListenerClient</stringProp>
+  <elementProp name="Arguments" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" enabled="true">
+    <collectionProp name="Arguments.arguments">
+      <elementProp name="graphiteMetricsSender" elementType="Argument">
+        <stringProp name="Argument.name">graphiteMetricsSender</stringProp>
+        <stringProp name="Argument.value">org.apache.jmeter.visualizers.backend.graphite.TextGraphiteMetricsSender</stringProp>
+      </elementProp>
+      <elementProp name="graphiteHost" elementType="Argument">
+        <stringProp name="Argument.name">graphiteHost</stringProp>
+        <stringProp name="Argument.value">${__P(graphite_host,localhost)}</stringProp>
+      </elementProp>
+      <elementProp name="graphitePort" elementType="Argument">
+        <stringProp name="Argument.name">graphitePort</stringProp>
+        <stringProp name="Argument.value">${__P(graphite_port,2003)}</stringProp>
+      </elementProp>
+      <elementProp name="rootMetricsPrefix" elementType="Argument">
+        <stringProp name="Argument.name">rootMetricsPrefix</stringProp>
+        <stringProp name="Argument.value">jmeter.</stringProp>
+      </elementProp>
+      <elementProp name="summaryOnly" elementType="Argument">
+        <stringProp name="Argument.name">summaryOnly</stringProp>
+        <stringProp name="Argument.value">false</stringProp>
+      </elementProp>
+      <elementProp name="samplersList" elementType="Argument">
+        <stringProp name="Argument.name">samplersList</stringProp>
+        <stringProp name="Argument.value">.*</stringProp>
+      </elementProp>
+      <elementProp name="percentiles" elementType="Argument">
+        <stringProp name="Argument.name">percentiles</stringProp>
+        <stringProp name="Argument.value">50;90;95;99</stringProp>
+      </elementProp>
+    </collectionProp>
+  </elementProp>
+  <stringProp name="asyncQueueSize">5000</stringProp>
+</BackendListener>
+```
+
+---
+
+## 15. Other Configuration Elements（其他配置元素）
+
+### 15.1 HTTP Cache Manager
+```xml
+<CacheManager guiclass="CacheManagerGui" testclass="CacheManager" testname="HTTP Cache Manager" enabled="true">
+  <boolProp name="clearEachIteration">false</boolProp>
+  <boolProp name="useExpires">true</boolProp>
+  <stringProp name="maxCacheSize">5000</stringProp>
+</CacheManager>
+```
+
+### 15.2 HTTP Authorization Manager
+```xml
+<AuthManager guiclass="AuthPanel" testclass="AuthManager" testname="HTTP Authorization Manager" enabled="true">
+  <boolProp name="AuthManager.clearEachIteration">false</boolProp>
+  <collectionProp name="AuthManager.auth_list">
+    <elementProp name="" elementType="Authorization">
+      <stringProp name="Authorization.url">http://api.example.com</stringProp>
+      <stringProp name="Authorization.username">admin</stringProp>
+      <stringProp name="Authorization.password">password</stringProp>
+      <stringProp name="Authorization.domain"></stringProp>
+      <stringProp name="Authorization.realm"></stringProp>
+      <stringProp name="Authorization.mechanism">BASIC</stringProp>
+    </elementProp>
+  </collectionProp>
+</AuthManager>
+```
+
+### 15.3 DNS Cache Manager
+```xml
+<DNSCacheManager guiclass="DNSCachePanel" testclass="DNSCacheManager" testname="DNS Cache Manager" enabled="true">
+  <boolProp name="clearEachIteration">false</boolProp>
+  <boolProp name="isCustomResolver">true</boolProp>
+  <collectionProp name="DNSCacheManager.servers">
+    <stringProp name="">8.8.8.8</stringProp>
+    <stringProp name="">8.8.4.4</stringProp>
+  </collectionProp>
+  <collectionProp name="DNSCacheManager.hosts"/>
+</DNSCacheManager>
+```
+
+### 15.4 Keystore Configuration
+```xml
+<KeystoreConfig guiclass="TestBeanGUI" testclass="KeystoreConfig" testname="Keystore Configuration" enabled="true">
+  <stringProp name="startIndex">0</stringProp>
+  <stringProp name="endIndex">-1</stringProp>
+  <stringProp name="preload">True</stringProp>
+</KeystoreConfig>
+```
+
+### 15.5 Counter
+```xml
+<CounterConfig guiclass="CounterConfigGui" testclass="CounterConfig" testname="Counter" enabled="true">
+  <stringProp name="CounterConfig.start">1</stringProp>
+  <stringProp name="CounterConfig.incr">1</stringProp>
+  <stringProp name="CounterConfig.max">9999</stringProp>
+  <stringProp name="CounterConfig.name">counter</stringProp>
+  <stringProp name="CounterConfig.format"></stringProp>
+  <boolProp name="CounterConfig.per_user">true</boolProp>
+  <boolProp name="CounterConfig.reset_on_tg_iteration">false</boolProp>
+</CounterConfig>
+```
+
+### 15.6 Random Variable
+```xml
+<RandomVariableConfig guiclass="RandomVariableConfigGui" testclass="RandomVariableConfig" testname="Random Variable" enabled="true">
+  <stringProp name="minimumValue">1</stringProp>
+  <stringProp name="maximumValue">1000</stringProp>
+  <stringProp name="variableName">random_id</stringProp>
+  <stringProp name="outputFormat"></stringProp>
+  <boolProp name="perThread">true</boolProp>
+  <stringProp name="randomSeed"></stringProp>
+</RandomVariableConfig>
+```
+
+---
+
+## 16. Miscellaneous（杂项组件）
+
+### 16.1 Debug Sampler
+```xml
+<DebugSampler guiclass="TestBeanGUI" testclass="DebugSampler" testname="Debug Sampler" enabled="true">
+  <boolProp name="displayJMeterProperties">false</boolProp>
+  <boolProp name="displayJMeterVariables">true</boolProp>
+  <boolProp name="displaySystemProperties">false</boolProp>
+</DebugSampler>
+```
+
+### 16.2 Flow Control Action
+```xml
+<ActionController guiclass="ActionControllerGui" testclass="ActionController" testname="Flow Control Action" enabled="true">
+  <intProp name="ActionController.target">0</intProp>
+  <intProp name="ActionController.action">1</intProp>
+  <stringProp name="ActionController.duration">1000</stringProp>
+</ActionController>
+```
+target: 0=current thread, 1=all threads
+action: 0=pause, 1=stop, 2=stop now, 3=go to next loop iteration, 4=break current loop
+
+### 16.3 Test Fragment
+```xml
+<TestFragmentController guiclass="TestFragmentControllerGui" testclass="TestFragmentController" testname="Test Fragment" enabled="true"/>
+```
+
+### 16.4 Result Status Action Handler
+```xml
+<ResultAction guiclass="ResultActionGui" testclass="ResultAction" testname="Result Status Action Handler" enabled="true">
+  <intProp name="OnError.action">1</intProp>
+</ResultAction>
+```
+OnError.action: 0=continue, 1=start next thread loop, 2=stop thread, 3=stop test, 4=stop test now
+
+### 16.5 Sample Timeout
+```xml
+<SampleTimeout guiclass="SampleTimeoutGui" testclass="SampleTimeout" testname="Sample Timeout" enabled="true">
+  <stringProp name="SampleTimeout.timeout">5000</stringProp>
+</SampleTimeout>
+```
