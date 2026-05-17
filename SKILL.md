@@ -1,8 +1,7 @@
-***
-
+---
 name: "jmeter-loader-skills"
-description: "自动化 JMeter 压测流程，支持 JMX 生成、压测执行、结果解析和优化建议。Invoke when user requests JMeter压测、性能测试、负载测试，or needs performance testing automation."
----------------------------------------------------------------------------------------------------------------------------------------------
+description: "Automates JMeter load testing: JMX generation (template + dynamic build), test execution, result parsing, and optimization. Invoke when user needs JMeter/performance/load testing."
+---
 
 # JMeter 压测自动化技能
 
