@@ -68,33 +68,35 @@ description: "Automates JMeter load testing: JMX generation (template + dynamic 
 
 **输入**：标准化的压测参数
 **处理**：
+
 1. 根据需求选择生成模式（模板模式或动态组装模式）
 2. 模板模式：选择合适的预置模板，参数替换后输出
 3. 动态组装模式：根据组件列表从零构建 JMX（推荐用于复杂场景）
 4. 验证 JMX 结构完整性
-**输出**：完整可执行的 JMX 测试计划文件
+   **输出**：完整可执行的 JMX 测试计划文件
 
 **两种生成模式**：
 
-| 模式 | 适用场景 | 命令示例 |
-|------|----------|----------|
-| 模板模式 | 需求匹配预置模板 | `python generate_jmx.py --template base.jmx --output test.jmx --param ...` |
-| 动态组装 | 多接口、自定义组件组合 | `python generate_jmx.py --build --output test.jmx --http-sampler ...` |
+| 模式   | 适用场景        | 命令示例                                                                       |
+| ---- | ----------- | -------------------------------------------------------------------------- |
+| 模板模式 | 需求匹配预置模板    | `python generate_jmx.py --template base.jmx --output test.jmx --param ...` |
+| 动态组装 | 多接口、自定义组件组合 | `python generate_jmx.py --build --output test.jmx --http-sampler ...`      |
 
 **动态组装模式支持的组件**（8 大类 24 种）：
 
-| 类别 | 组件 |
-|------|------|
-| Samplers | http_sampler, debug_sampler |
-| Controllers | if_controller, transaction_controller, once_only_controller, loop_controller, foreach_controller |
-| Timers | constant_timer, gaussian_timer, uniform_timer, synchronizing_timer |
-| Extractors | json_extractor, boundary_extractor, regex_extractor |
-| Assertions | response_assertion, duration_assertion, json_assertion |
-| Config | http_defaults, header_manager, cookie_manager, cache_manager, csv_data_set |
-| Processors | jsr223_postprocessor, jsr223_preprocessor |
-| Listeners | result_collector, backend_listener_influxdb |
+| 类别          | 组件                                                                                                     |
+| ----------- | ------------------------------------------------------------------------------------------------------ |
+| Samplers    | http\_sampler, debug\_sampler                                                                          |
+| Controllers | if\_controller, transaction\_controller, once\_only\_controller, loop\_controller, foreach\_controller |
+| Timers      | constant\_timer, gaussian\_timer, uniform\_timer, synchronizing\_timer                                 |
+| Extractors  | json\_extractor, boundary\_extractor, regex\_extractor                                                 |
+| Assertions  | response\_assertion, duration\_assertion, json\_assertion                                              |
+| Config      | http\_defaults, header\_manager, cookie\_manager, cache\_manager, csv\_data\_set                       |
+| Processors  | jsr223\_postprocessor, jsr223\_preprocessor                                                            |
+| Listeners   | result\_collector, backend\_listener\_influxdb                                                         |
 
 **动态组装示例**：
+
 ```bash
 python generate_jmx.py --build --output test.jmx \
   --param target_host=api.example.com \
@@ -370,6 +372,7 @@ python parse_jtl.py --jtl result.jtl --output report.json \
 ### base.jmx（基础 HTTP 模板）
 
 适用于简单的 HTTP 接口压测，包含：
+
 - 标准线程组配置
 - HTTP 请求采样器
 - 结果收集器
@@ -377,18 +380,20 @@ python parse_jtl.py --jtl result.jtl --output report.json \
 
 **适用场景**：单接口压测、简单负载测试
 
-### csv_data.jmx（CSV 数据源模板）
+### csv\_data.jmx（CSV 数据源模板）
 
 适用于需要从 CSV 读取测试数据的场景，包含：
+
 - CSV 数据集配置
 - 参数化 HTTP 请求
 - 循环控制器
 
 **适用场景**：多用户登录、参数化请求、数据驱动测试
 
-### auth_flow.jmx（带鉴权的业务流程模板）
+### auth\_flow\.jmx（带鉴权的业务流程模板）
 
 适用于需要鉴权的业务流程压测，包含：
+
 - 登录请求（获取 Token）
 - Token 提取器
 - 带认证头的业务请求
@@ -396,20 +401,22 @@ python parse_jtl.py --jtl result.jtl --output report.json \
 
 **适用场景**：需要登录的接口、Token 刷新流程、完整业务链路
 
-### multi_api.jmx（多接口混合压测模板）
+### multi\_api.jmx（多接口混合压测模板）
 
 适用于多个 API 端点的混合压测，包含：
+
 - 3 个 HTTP 请求采样器（GET/POST 混合）
 - 每个请求的 JSON 数据提取器
-- 接口间数据串联（user_id → order_id）
+- 接口间数据串联（user\_id → order\_id）
 - Response Assertion 断言
 - InfluxDB Backend Listener（默认禁用）
 
 **适用场景**：多接口混合压测、接口间数据依赖、API 链路测试
 
-### staged_load.jmx（阶梯加压模板）
+### staged\_load.jmx（阶梯加压模板）
 
 适用于阶梯式负载测试，包含：
+
 - 3 个顺序执行的 Thread Group（低→中→高负载）
 - 每阶段独立的并发数和持续时间配置
 - Duration Assertion 响应时间断言
@@ -417,9 +424,10 @@ python parse_jtl.py --jtl result.jtl --output report.json \
 
 **适用场景**：性能拐点探测、容量规划、阶梯加压测试
 
-### jdbc_test.jmx（JDBC 数据库压测模板）
+### jdbc\_test.jmx（JDBC 数据库压测模板）
 
 适用于数据库性能测试，包含：
+
 - JDBC Connection Configuration 连接池配置
 - 3 个 JDBC 采样器（Select/Insert/Update）
 - Prepared Statement 参数绑定
@@ -427,12 +435,13 @@ python parse_jtl.py --jtl result.jtl --output report.json \
 
 **适用场景**：数据库性能测试、SQL 压力测试、连接池调优
 
-### business_flow.jmx（业务流程模板）
+### business\_flow\.jmx（业务流程模板）
 
 适用于完整业务流程的事务级压测，包含：
+
 - Once Only Controller（登录仅执行一次）
 - 4 个 Transaction Controller（浏览→加购→结算→支付）
-- 接口间数据提取与传递（auth_token → product_id → cart_id → order_id）
+- 接口间数据提取与传递（auth\_token → product\_id → cart\_id → order\_id）
 - If Controller 条件判断
 - Debug Sampler 调试
 
